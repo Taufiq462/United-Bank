@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>United Bank - Digital Payment App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a3d62 0%, #1e5799 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .payment-app {
+            width: 100%;
+            max-width: 500px;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(to right, #0a3d62, #1e5799);
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 15px;
+        }
+        
+        .pakistan-flag {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            color: #fff;
+            display: flex;
+            gap: 3px;
+        }
+        
+        .green-star {
+            color: #00401A;
+        }
+        
+        .white-crescent {
+            color: white;
+        }
+        
+        .container {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+            font-size: 15px;
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #0a3d62;
+            font-size: 18px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px 15px 15px 50px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s;
+            outline: none;
+        }
+        
+        .form-control:focus {
+            border-color: #0a3d62;
+            box-shadow: 0 0 0 3px rgba(10, 61, 98, 0.1);
+        }
+        
+        .amount-input {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .currency-selector {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .bank-selector {
+            margin-top: 25px;
+            border-top: 1px solid #eee;
+            padding-top: 25px;
+        }
+        
+        .bank-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .bank-option {
+            flex: 1;
+            min-width: 120px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .bank-option i {
+            font-size: 24px;
+            color: #0a3d62;
+        }
+        
+        .bank-option:hover {
+            border-color: #0a3d62;
+            background-color: #f0f7ff;
+        }
+        
+        .bank-option.active {
+            border-color: #0a3d62;
+            background-color: #e6f0ff;
+            box-shadow: 0 4px 8px rgba(10, 61, 98, 0.1);
+        }
+        
+        .bank-logo {
+            height: 30px;
+            width: auto;
+            object-fit: contain;
+        }
+        
+        .token-section {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 12px;
+            border-left: 4px solid #0a3d62;
+        }
+        
+        .token-section h3 {
+            margin-bottom: 10px;
+            color: #444;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .token-note {
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(to right, #0a3d62, #1e5799);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(10, 61, 98, 0.2);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        .submit-btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .success-screen {
+            text-align: center;
+            padding: 40px 30px;
+            display: none;
+        }
+        
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #0a3d62, #1e5799);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            animation: pulse 2s infinite;
+        }
+        
+        .success-icon i {
+            font-size: 50px;
+            color: white;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(10, 61, 98, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(10, 61, 98, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(10, 61, 98, 0); }
+        }
+        
+        .success-screen h2 {
+            color: #2ecc71;
+            margin-bottom: 15px;
+            font-size: 32px;
+        }
+        
+        .success-screen p {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .transaction-details {
+            background-color: #f9f9f9;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 25px;
+            text-align: left;
+        }
+        
+        .transaction-details h3 {
+            margin-bottom: 15px;
+            color: #444;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .new-payment-btn {
+            background: linear-gradient(to right, #0a3d62, #1e5799);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: all 0.3s;
+        }
+        
+        .new-payment-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(10, 61, 98, 0.2);
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-size: 14px;
+            border-top: 1px solid #eee;
+        }
+        
+        .urdu-text {
+            font-family: 'Noto Nastaliq Urdu', 'Segoe UI', system-ui, sans-serif;
+            direction: rtl;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .bank-option {
+                min-width: calc(50% - 10px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-app">
+        <div class="header">
+            <div class="pakistan-flag">
+                <span class="green-star">★</span>
+                <span class="white-crescent">☪</span>
+            </div>
+            <h1><i class="fas fa-university"></i> United Bank</h1>
+            <p>Pakistan's Leading Digital Payment Solution</p>
+            <p class="urdu-text" style="margin-top: 5px; font-size: 14px;">پاکستان کی معروف ڈیجیٹل ادائیگی کی سہولت</p>
+        </div>
+        
+        <div class="container">
+            <!-- Payment Form -->
+            <div id="payment-form">
+                <div class="form-group">
+                    <label for="amount">Amount to Send (PKR)</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-rupee-sign"></i>
+                        <input type="number" id="amount" class="form-control amount-input" placeholder="0.00" min="100" step="100" required>
+                        <div class="currency-selector">PKR</div>
+                    </div>
+                    <div class="error-message" id="amount-error">Please enter a valid amount (minimum PKR 100)</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="account">Recipient Account Number (IBAN)</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-credit-card"></i>
+                        <input type="text" id="account" class="form-control" placeholder="PKXX-XXXX-XXXX-XXXX-XXXX" required>
+                    </div>
+                    <div class="error-message" id="account-error">Please enter a valid 24-digit IBAN (PKXX-XXXX-XXXX-XXXX-XXXX)</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bank-token">Bank Security Token (Optional)</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-key"></i>
+                        <input type="text" id="bank-token" class="form-control" placeholder="Enter your bank token if available">
+                    </div>
+                    <div class="error-message" id="token-error">Invalid token format</div>
+                </div>
+                
+                <div class="bank-selector">
+                    <label>Select Bank</label>
+                    <div class="bank-options">
+                        <div class="bank-option active" data-bank="ubl">
+                            <i class="fas fa-university"></i>
+                            <span>United Bank</span>
+                        </div>
+                        <div class="bank-option" data-bank="hbl">
+                            <i class="fas fa-landmark"></i>
+                            <span>HBL</span>
+                        </div>
+                        <div class="bank-option" data-bank="mcb">
+                            <i class="fas fa-piggy-bank"></i>
+                            <span>MCB</span>
+                        </div>
+                        <div class="bank-option" data-bank="alfalah">
+                            <i class="fas fa-building"></i>
+                            <span>Bank Alfalah</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="token-section">
+                    <h3><i class="fas fa-info-circle"></i> About Bank Tokens</h3>
+                    <p class="token-note">Some banks provide security tokens for additional authentication. If your bank has provided you with a token, entering it here will authenticate your payment directly with your bank's API for enhanced security.</p>
+                </div>
+                
+                <button class="submit-btn" id="submit-payment">
+                    <i class="fas fa-paper-plane"></i> Send Payment
+                </button>
+            </div>
+            
+            <!-- Success Screen -->
+            <div id="success-screen" class="success-screen">
+                <div class="success-icon">
+                    <i class="fas fa-check"></i>
+                </div>
+                <h2>Payment Successful!</h2>
+                <p>Your payment has been processed successfully. The funds have been transferred to the recipient's account.</p>
+                
+                <div class="transaction-details">
+                    <h3>Transaction Details</h3>
+                    <div class="detail-row">
+                        <span>Transaction ID:</span>
+                        <span id="trans-id">TX7890453216</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Amount Sent:</span>
+                        <span id="trans-amount">PKR 0.00</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Recipient Account:</span>
+                        <span id="trans-account">PKXX-XXXX-XXXX-XXXX-XXXX</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Date & Time:</span>
+                        <span id="trans-date">January 1, 2023 12:00 PM</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Status:</span>
+                        <span style="color: #2ecc71; font-weight: 600;">Completed</span>
+                    </div>
+                </div>
+                
+                <button class="new-payment-btn" id="new-payment">
+                    <i class="fas fa-plus"></i> New Payment
+                </button>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><i class="fas fa-lock"></i> All transactions are secured with 256-bit SSL encryption</p>
+            <p class="urdu-text">تمام لین دین 256 بٹ SSL خفیہ کاری کے ساتھ محفوظ ہیں</p>
+            <p>© 2023 United Bank Pakistan. Demo application for educational purposes.</p>
+        </div>
+    </div>
+
+    <script>
+        // DOM elements
+        const paymentForm = document.getElementById('payment-form');
+        const successScreen = document.getElementById('success-screen');
+        const submitBtn = document.getElementById('submit-payment');
+        const newPaymentBtn = document.getElementById('new-payment');
+        const amountInput = document.getElementById('amount');
+        const accountInput = document.getElementById('account');
+        const bankTokenInput = document.getElementById('bank-token');
+        const bankOptions = document.querySelectorAll('.bank-option');
+        
+        // Error message elements
+        const amountError = document.getElementById('amount-error');
+        const accountError = document.getElementById('account-error');
+        const tokenError = document.getElementById('token-error');
+        
+        // Success screen elements
+        const transAmount = document.getElementById('trans-amount');
+        const transAccount = document.getElementById('trans-account');
+        const transDate = document.getElementById('trans-date');
+        const transId = document.getElementById('trans-id');
+        
+        // Selected bank - default to United Bank
+        let selectedBank = 'ubl';
+        
+        // Pakistani Bank API endpoints (mock data)
+        const bankAPIs = {
+            'ubl': { 
+                name: 'United Bank Limited', 
+                tokenRequired: false, 
+                apiUrl: 'https://api.ubldigital.com/payment',
+                color: '#0a3d62'
+            },
+            'hbl': { 
+                name: 'Habib Bank Limited', 
+                tokenRequired: true, 
+                apiUrl: 'https://api.hbl.com/transfer',
+                color: '#006737'
+            },
+            'mcb': { 
+                name: 'Muslim Commercial Bank', 
+                tokenRequired: false, 
+                apiUrl: 'https://api.mcb.com.pk/transaction',
+                color: '#D32030'
+            },
+            'alfalah': { 
+                name: 'Bank Alfalah', 
+                tokenRequired: true, 
+                apiUrl: 'https://api.bankalfalah.com/payments',
+                color: '#7D3F98'
+            }
+        };
+        
+        // Initialize the app
+        function initApp() {
+            // Set today's date for the transaction
+            const now = new Date();
+            transDate.textContent = now.toLocaleDateString('en-PK', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            // Generate a random transaction ID with Pakistani bank format
+            transId.textContent = 'UBL' + now.getFullYear() + Math.floor(100000 + Math.random() * 900000);
+            
+            // Add event listeners
+            submitBtn.addEventListener('click', processPayment);
+            newPaymentBtn.addEventListener('click', showPaymentForm);
+            
+            // Add input validation on the fly
+            amountInput.addEventListener('input', validateAmount);
+            accountInput.addEventListener('input', validateAccount);
+            bankTokenInput.addEventListener('input', validateToken);
+            
+            // Bank selection
+            bankOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    // Remove active class from all options
+                    bankOptions.forEach(opt => opt.classList.remove('active'));
+                    
+                    // Add active class to clicked option
+                    option.classList.add('active');
+                    
+                    // Set selected bank
+                    selectedBank = option.getAttribute('data-bank');
+                    
+                    // Update bank-specific styling
+                    updateBankStyling();
+                    
+                    // Update token requirement note
+                    updateTokenNote();
+                });
+            });
+            
+            // Set United Bank as default active
+            document.querySelector('[data-bank="ubl"]').classList.add('active');
+            
+            // Simulate pressing Enter key to submit
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    processPayment();
+                }
+            });
+            
+            // Initialize bank styling
+            updateBankStyling();
+        }
+        
+        // Update UI colors based on selected bank
+        function updateBankStyling() {
+            const bank = bankAPIs[selectedBank];
+            const primaryColor = bank.color;
+            
+            // Update header gradient
+            document.querySelector('.header').style.background = `linear-gradient(to right, ${primaryColor}, ${lightenColor(primaryColor, 30)})`;
+            
+            // Update button gradients
+            document.querySelector('.submit-btn').style.background = `linear-gradient(to right, ${primaryColor}, ${lightenColor(primaryColor, 30)})`;
+            document.querySelector('.new-payment-btn').style.background = `linear-gradient(to right, ${primaryColor}, ${lightenColor(primaryColor, 30)})`;
+            
+            // Update focus borders and icons
+            const styleEl = document.createElement('style');
+            styleEl.id = 'dynamic-styles';
+            document.head.appendChild(styleEl);
+            
+            document.getElementById('dynamic-styles').innerHTML = `
+                .form-control:focus { border-color: ${primaryColor}; box-shadow: 0 0 0 3px ${primaryColor}20; }
+                .input-with-icon i { color: ${primaryColor}; }
+                .bank-option:hover, .bank-option.active { border-color: ${primaryColor}; }
+                .bank-option.active { background-color: ${primaryColor}10; }
+                .token-section { border-left-color: ${primaryColor}; }
+                .success-icon { background: linear-gradient(135deg, ${primaryColor}, ${lightenColor(primaryColor, 30)}); }
+                @keyframes pulse { 0% { box-shadow: 0 0 0 0 ${primaryColor}70; } }
+            `;
+        }
+        
+        // Helper function to lighten colors
+        function lightenColor(color, percent) {
+            const num = parseInt(color.replace("#", ""), 16);
+            const amt = Math.round(2.55 * percent);
+            const R = (num >> 16) + amt;
+            const G = (num >> 8 & 0x00FF) + amt;
+            const B = (num & 0x0000FF) + amt;
+            return "#" + (
+                0x1000000 +
+                (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
+                (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
+                (B < 255 ? B < 1 ? 0 : B : 255)
+            ).toString(16).slice(1);
+        }
+        
+        // Validate amount input (PKR)
+        function validateAmount() {
+            const amount = parseFloat(amountInput.value);
+            
+            if (!amount || amount < 100) {
+                amountError.textContent = 'Please enter a valid amount (minimum PKR 100)';
+                amountError.style.display = 'block';
+                return false;
+            } else if (amount > 500000) {
+                amountError.textContent = 'Amount exceeds maximum limit (PKR 500,000)';
+                amountError.style.display = 'block';
+                return false;
+            } else {
+                amountError.style.display = 'none';
+                return true;
+            }
+        }
+        
+        // Validate account input (Pakistani IBAN format)
+        function validateAccount() {
+            const account = accountInput.value.replace(/-/g, '').toUpperCase();
+            
+            // Check if it starts with PK and has 24 characters
+            if (!account.startsWith('PK')) {
+                accountError.textContent = 'IBAN must start with "PK" for Pakistan';
+                accountError.style.display = 'block';
+                return false;
+            }
+            
+            if (!account || account.length !== 24) {
+                accountError.textContent = 'Please enter a valid 24-digit IBAN';
+                accountError.style.display = 'block';
+                return false;
+            } else {
+                accountError.style.display = 'none';
+                // Format the IBAN with dashes
+                if (account.length === 24 && !accountInput.value.includes('-')) {
+                    accountInput.value = account.replace(/(PK\d{2})(\d{4})(\d{4})(\d{4})(\d{4})/, '$1-$2-$3-$4-$5');
+                }
+                return true;
+            }
+        }
+        
+        // Validate token input (if provided)
+        function validateToken() {
+            const token = bankTokenInput.value.trim();
+            
+            // Token is optional, so only validate if there's content
+            if (token && token.length < 6) {
+                tokenError.textContent = 'Token must be at least 6 characters';
+                tokenError.style.display = 'block';
+                return false;
+            } else {
+                tokenError.style.display = 'none';
+                return true;
+            }
+        }
+        
+        // Update token requirement note based on selected bank
+        function updateTokenNote() {
+            const tokenSection = document.querySelector('.token-section');
+            const bank = bankAPIs[selectedBank];
+            
+            if (bank.tokenRequired) {
+                tokenSection.innerHTML = `
+                    <h3><i class="fas fa-key"></i> Token Required for ${bank.name}</h3>
+                    <p class="token-note">${bank.name} requires a security token for payment authentication. Please enter the token provided by your bank to proceed with the payment.</p>
+                `;
+                bankTokenInput.placeholder = `Enter your ${bank.name} security token`;
+            } else {
+                tokenSection.innerHTML = `
+                    <h3><i class="fas fa-info-circle"></i> About Bank Tokens</h3>
+                    <p class="token-note">Some banks provide security tokens for additional authentication. If your bank has provided you with a token, entering it here will authenticate your payment directly with your bank's API for enhanced security.</p>
+                `;
+                bankTokenInput.placeholder = 'Enter your bank token if available';
+            }
+        }
+        
+        // Process payment
+        function processPayment() {
+            // Validate all inputs
+            const isAmountValid = validateAmount();
+            const isAccountValid = validateAccount();
+            const isTokenValid = validateToken();
+            
+            if (!isAmountValid || !isAccountValid || !isTokenValid) {
+                return;
+            }
+            
+            // Check if token is required but not provided
+            if (bankAPIs[selectedBank].tokenRequired && !bankTokenInput.value.trim()) {
+                tokenError.textContent = `${bankAPIs[selectedBank].name} requires a security token for this transaction`;
+                tokenError.style.display = 'block';
+                return;
+            }
+            
+            // Disable submit button and show processing state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                // Update success screen with transaction details
+                transAmount.textContent = 'PKR ' + parseInt(amountInput.value).toLocaleString('en-PK') + '.00';
+                transAccount.textContent = accountInput.value;
+                
+                // Update transaction ID with bank-specific format
+                const now = new Date();
+                transId.textContent = selectedBank.toUpperCase() + now.getFullYear() + Math.floor(100000 + Math.random() * 900000);
+                
+                // Show success screen
+                paymentForm.style.display = 'none';
+                successScreen.style.display = 'block';
+                
+                // If a bank is selected and token is provided, simulate API integration
+                if (selectedBank && bankTokenInput.value.trim()) {
+                    simulateBankAPIintegration();
+                }
+            }, 2000);
+        }
+        
+        // Simulate bank API integration
+        function simulateBankAPIintegration() {
+            const bank = bankAPIs[selectedBank];
+            
+            console.log(`Simulating API call to ${bank.name}...`);
+            console.log(`API Endpoint: ${bank.apiUrl}`);
+            console.log(`Amount: PKR ${amountInput.value}`);
+            console.log(`Account: ${accountInput.value}`);
+            console.log(`Token: ${bankTokenInput.value}`);
+            console.log(`Bank: ${bank.name}`);
+            console.log('Payment authenticated with bank API successfully!');
+            
+            // In a real application, you would make an actual API call here
+            // Example for United Bank:
+            // fetch('https://api.ubldigital.com/payment', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'Authorization': `Bearer ${bankTokenInput.value}`
+            //     },
+            //     body: JSON.stringify({
+            //         amount: amountInput.value,
+            //         account: accountInput.value.replace(/-/g, ''),
+            //         currency: 'PKR',
+            //         bankCode: selectedBank.toUpperCase()
+            //     })
+            // })
+            // .then(response => response.json())
+            // .then(data => console.log('Bank API response:', data))
+            // .catch(error => console.error('Bank API error:', error));
+        }
+        
+        // Show payment form for a new payment
+        function showPaymentForm() {
+            // Reset form
+            amountInput.value = '';
+            accountInput.value = '';
+            bankTokenInput.value = '';
+            
+            // Reset bank selection to United Bank
+            bankOptions.forEach(opt => opt.classList.remove('active'));
+            document.querySelector('[data-bank="ubl"]').classList.add('active');
+            selectedBank = 'ubl';
+            
+            // Reset error messages
+            amountError.style.display = 'none';
+            accountError.style.display = 'none';
+            tokenError.style.display = 'none';
+            
+            // Reset submit button
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Payment';
+            
+            // Show payment form
+            paymentForm.style.display = 'block';
+            successScreen.style.display = 'none';
+            
+            // Update bank styling and token note
+            updateBankStyling();
+            updateTokenNote();
+        }
+        
+        // Initialize the app when the page loads
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
